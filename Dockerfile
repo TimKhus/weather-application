@@ -20,4 +20,4 @@ COPY src /app/src
 RUN mvn package -DskipTests
 
 # Запуск приложения
-CMD ["java", "-jar", "target/weather-application.war"]
+CMD ["java", "-jar", "target/weather-0.0.1-SNAPSHOT.war"]
