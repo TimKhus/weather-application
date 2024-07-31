@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Locations</title>
+</head>
+<body>
+<h1>Search Locations</h1>
+<br>
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+<br>
+<form method="get" th:action="@{/search/location}">
+    <label for="locationName">Location Name:</label>
+    <input type="text" id="locationName" name="locationName" th:value="${locationName}">
+    <button type="submit">Search</button>
+</form>
+<br><br>
+<a data-th-href="@{/weather/locations}">&larr; To the locations list</a>
+</body>
+</html>

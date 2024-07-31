@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+<h2>User Registration</h2>
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+<form action="/register" method="post">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"
+           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$"
+           title="Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one digit."
+           required><br>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

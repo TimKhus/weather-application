@@ -1,0 +1,73 @@
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+    <head>
+        <title>Locations</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                table-layout: auto;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+                white-space: nowrap;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Locations</h1>
+    <h2>Welcome, <span th:text="${username}" >Username</span>!</h2>
+    <div th:if="${successMessage}" style="color: green;">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <form method="get" data-th-action="@{/logout}">
+        <button type="submit">Log Out</button>
+    </form>
+    <br>
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>State</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="location, index : ${locations}">
+            <td class="col-num" th:text="${index.index + 1}">1</td>
+            <td class="col-name">
+                <a th:href="@{/weather/location/{locationId}(locationId=${location?.id})}" th:text="${location?.name}">Location Name</a>
+            </td>
+            <td class="col-name" th:text="${location.country}">Country</td>
+            <td class="col-name" th:text="${location.state}">State</td>
+        </tr>
+        </tbody>
+    </table> <br><br>
+    <a th:href="@{/search}">Add new location</a>
+    <br><br>
+    <form th:action="@{http://localhost:8080/user/change/password}" method="get">
+        <button type="submit">Change password</button>
+    </form>
+    <br>
+    <form th:action="@{/delete_user_confirmation}" method="get">
+        <button type="submit">Delete user</button>
+    </form>
+    <br><br>
+    <div th:if="${isAdmin}">
+        <form th:action="@{/admin/users}" method="get">
+            <button type="submit">To admin page</button>
+        </form>
+    </div>
+    </body>
+    </html>

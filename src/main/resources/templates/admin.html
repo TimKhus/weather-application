@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+<h1>Admin page</h1>
+<h2>Welcome, <span th:text="${username}" >Username</span>!</h2>
+
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+<div th:if="${successMessage}" style="color: green;">
+    <p th:text="${successMessage}"></p>
+</div>
+
+<form method="get" data-th-action="@{/logout}">
+    <button type="submit">Log Out</button>
+</form>
+<br><br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${usersList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.role}">ROLE_USER</td>
+        <td th:text="${user.email}">user@example.com</td>
+        <td>
+            <a th:href="@{/admin/user/id/{id}(id=${user.id})}">View details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+<a data-th-href="@{http://localhost:8080/weather/locations}">&larr; To the locations list</a><br><br>
+
+</body>
+</html>

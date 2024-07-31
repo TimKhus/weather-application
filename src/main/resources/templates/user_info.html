@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+</head>
+<body>
+<h1>User Information</h1>
+
+<!-- Display User Details -->
+<div>
+    <h2>User Details</h2>
+    <p><strong>ID:</strong> <span th:text="${user.id}">1</span></p>
+    <p><strong>Role:</strong> <span th:text="${user.role}">ROLE_USER</span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
+</div>
+
+<!-- Display User Locations -->
+<div>
+    <h2>Locations</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="location : ${user.locations}">
+            <td th:text="${location.id}">1</td>
+            <td th:text="${location.name}">Location Name</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+
+<!-- Block User Form -->
+<form method="post" th:action="@{/admin/block/user/{userId}(userId=${user.id})}">
+    <button type="submit">Block user</button>
+</form>
+<br>
+
+<!-- Restore User Role Form -->
+<form method="post" th:action="@{/admin/unblock/user/{userId}(userId=${user.id})}">
+    <button type="submit">Restore user role</button>
+</form>
+
+<br>
+<!-- Give Admin Role Form -->
+<form method="post" th:action="@{/admin/admin/user/{userId}(userId=${user.id})}">
+    <button type="submit">Give admin role</button>
+</form>
+
+<br>
+
+<!-- Back to Users List -->
+<div>
+    <a href="/admin/users">Back to Users List</a>
+</div>
+</body>
+</html>

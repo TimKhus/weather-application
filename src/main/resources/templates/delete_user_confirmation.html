@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Locations</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<h1><span th:text="${username}" >Username</span>, do you really want to delete your account?</h1>
+<br><br>
+<form method="get" data-th-action="@{/weather/locations}">
+    <button type="submit">No</button>
+</form>
+<br>
+<form th:action="@{/user/delete/{userId}(userId=${userId})}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">Yes, delete my profile</button>
+</form>
+
+</body>
+</html>
