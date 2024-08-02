@@ -2,6 +2,7 @@ package com.example.weather.config;
 
 import com.example.weather.repositories.UserRepository;
 import com.example.weather.services.WeatherAppUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,7 +23,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
