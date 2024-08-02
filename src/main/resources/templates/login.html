@@ -4,21 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #e2e3e5; /* светло-серый фон */
+      color: #212529; /* темно-серый текст */
+      text-align: center;
+    }
+    .container {
+      border: 1px solid #dee2e6; /* светло-серые границы */
+      border-radius: 5px;
+      background-color: #ffffff; /* белый фон контейнера */
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 {
+      font-size: 2em;
+      color: #007bff; /* синий цвет заголовка */
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      text-align: left;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ced4da; /* светло-серые границы ввода */
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .success {
+      color: green;
+      margin-bottom: 20px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-<h2>Login</h2>
-<br>
-<div th:if="${successMessage}" style="color: green;">
-  <p th:text="${successMessage}"></p>
+<div class="container">
+  <h2>Login</h2>
+  <div class="success" th:if="${successMessage}">
+    <p th:text="${successMessage}"></p>
+  </div>
+  <form action="/login" method="post">
+    <label for="username">Email:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? <a href="/register">Register here</a></p>
 </div>
-
-<form action="/login" method="post">
-  <label for="username">Email:</label><br>
-  <input type="text" id="username" name="username" required><br>
-  <label for="password">Password:</label><br>
-  <input type="password" id="password" name="password" required><br>
-  <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="/register">Register here</a></p>
 </body>
 </html>

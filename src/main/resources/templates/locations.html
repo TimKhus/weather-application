@@ -1,73 +1,138 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
-    <head>
-        <title>Locations</title>
-        <style>
-            table {
-                border-collapse: collapse;
-                table-layout: auto;
-            }
-            th, td {
-                border: 1px solid black;
-                padding: 8px;
-                text-align: left;
-                white-space: nowrap;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            .table-container {
-                overflow-x: auto;
-            }
-        </style>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e2e3e5; /* светло-серый фон */
+            color: #212529; /* темно-серый текст */
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #dee2e6; /* светло-серые границы */
+            border-radius: 5px;
+            background-color: #ffffff; /* белый фон контейнера */
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #007bff; /* синий цвет заголовка */
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #007bff; /* синий цвет подзаголовка */
+        }
+        .success, .error {
+            margin: 10px 0;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        form {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            border-collapse: collapse;
+            table-layout: auto;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6; /* светло-серые границы */
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #f2f2f2; /* светло-серый фон заголовков */
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
     <h1>Locations</h1>
-    <h2>Welcome, <span th:text="${username}" >Username</span>!</h2>
-    <div th:if="${successMessage}" style="color: green;">
+    <h2>Welcome, <span th:text="${username}">Username</span>!</h2>
+    <div class="success" th:if="${successMessage}">
         <p th:text="${successMessage}"></p>
     </div>
     <form method="get" data-th-action="@{/logout}">
         <button type="submit">Log Out</button>
     </form>
-    <br>
-    <div th:if="${error}" style="color: red;">
+    <div class="error" th:if="${error}">
         <p th:text="${error}"></p>
     </div>
-    <table>
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>State</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="location, index : ${locations}">
-            <td class="col-num" th:text="${index.index + 1}">1</td>
-            <td class="col-name">
-                <a th:href="@{/weather/location/{locationId}(locationId=${location?.id})}" th:text="${location?.name}">Location Name</a>
-            </td>
-            <td class="col-name" th:text="${location.country}">Country</td>
-            <td class="col-name" th:text="${location.state}">State</td>
-        </tr>
-        </tbody>
-    </table> <br><br>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>State</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="location, index : ${locations}">
+                <td th:text="${index.index + 1}">1</td>
+                <td>
+                    <a th:href="@{/weather/location/{locationId}(locationId=${location?.id})}" th:text="${location?.name}">Location Name</a>
+                </td>
+                <td th:text="${location.country}">Country</td>
+                <td th:text="${location.state}">State</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <a th:href="@{/search}">Add new location</a>
-    <br><br>
     <form th:action="@{http://localhost:8080/user/change/password}" method="get">
         <button type="submit">Change password</button>
     </form>
-    <br>
     <form th:action="@{/delete_user_confirmation}" method="get">
         <button type="submit">Delete user</button>
     </form>
-    <br><br>
     <div th:if="${isAdmin}">
         <form th:action="@{/admin/users}" method="get">
             <button type="submit">To admin page</button>
         </form>
     </div>
-    </body>
-    </html>
+</div>
+</body>
+</html>

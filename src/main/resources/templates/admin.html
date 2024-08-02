@@ -2,46 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e2e3e5; /* светло-серый цвет фона */
+            color: #212529; /* темно-серый цвет текста */
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #dee2e6; /* светло-серый цвет границы */
+            border-radius: 5px;
+            background-color: #ffffff; /* белый фон контейнера */
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            color: #007bff; /* синий цвет заголовка */
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #dee2e6; /* светло-серый цвет границы */
+        }
+        th {
+            background-color: #007bff; /* синий цвет заголовков таблицы */
+            color: white;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<h1>Admin page</h1>
-<h2>Welcome, <span th:text="${username}" >Username</span>!</h2>
+<div class="container">
+    <h1>Admin page</h1>
+    <h2>Welcome, <span th:text="${username}">Username</span>!</h2>
 
-<div th:if="${error}" style="color: red;">
-    <p th:text="${error}"></p>
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${successMessage}" style="color: green;">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <form method="get" data-th-action="@{/logout}">
+        <button type="submit">Log Out</button>
+    </form>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersList}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.role}">ROLE_USER</td>
+            <td th:text="${user.email}">user@example.com</td>
+            <td>
+                <a th:href="@{/admin/user/id/{id}(id=${user.id})}">View details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <a data-th-href="@{http://localhost:8080/weather/locations}">&larr; To the locations list</a><br><br>
 </div>
-<div th:if="${successMessage}" style="color: green;">
-    <p th:text="${successMessage}"></p>
-</div>
-
-<form method="get" data-th-action="@{/logout}">
-    <button type="submit">Log Out</button>
-</form>
-<br><br>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Role</th>
-        <th>Email</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${usersList}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.role}">ROLE_USER</td>
-        <td th:text="${user.email}">user@example.com</td>
-        <td>
-            <a th:href="@{/admin/user/id/{id}(id=${user.id})}">View details</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-
-<a data-th-href="@{http://localhost:8080/weather/locations}">&larr; To the locations list</a><br><br>
-
 </body>
 </html>

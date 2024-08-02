@@ -21,7 +21,7 @@
 <p>Visibility: <span th:text="${weatherData.visibility} + ' meters'">Visibility</span></p>
 <p>Wind: <span th:text="${#numbers.formatDecimal(weatherData.wind.speed, 0, 0)} + ' meters/sec'">Wind</span></p>
 <p>Wind direction: <span th:text="${weatherData.wind.deg} + ' deg'">Wind direction</span></p><br>
-<a data-th-href="@{http://localhost:8080/weather/locations}">&larr; To the locations list</a><br><br>
+<a data-th-href="@{/weather/locations}">&larr; To the locations list</a><br><br>
 <form method="post" data-th-action="@{/location/delete/{locationId}(locationId=${locationId})}">
     <button type="submit">Delete</button>
 </form>

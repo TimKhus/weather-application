@@ -4,21 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e2e3e5; /* светло-серый фон */
+            color: #212529; /* темно-серый текст */
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #dee2e6; /* светло-серые границы */
+            border-radius: 5px;
+            background-color: #ffffff; /* белый фон контейнера */
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            font-size: 2em;
+            color: #007bff; /* синий цвет заголовка */
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da; /* светло-серые границы ввода */
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-<h2>User Registration</h2>
-<div th:if="${error}" style="color: red;">
-    <p th:text="${error}"></p>
+<div class="container">
+    <h2>User Registration</h2>
+    <div class="error" th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+    <form action="/register" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$"
+               title="Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one digit."
+               required>
+        <button type="submit">Register</button>
+    </form>
 </div>
-<form action="/register" method="post">
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"
-           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$"
-           title="Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one digit."
-           required><br>
-    <button type="submit">Register</button>
-</form>
 </body>
 </html>

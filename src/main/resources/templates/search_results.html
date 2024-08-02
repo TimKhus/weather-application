@@ -4,32 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e2e3e5; /* светло-серый фон */
+            color: #212529; /* темно-серый текст */
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #dee2e6; /* светло-серые границы */
+            border-radius: 5px;
+            background-color: #ffffff; /* белый фон контейнера */
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            overflow-y: auto; /* прокрутка по вертикали, если содержимое слишком длинное */
+        }
+        h1 {
+            font-size: 2em;
+            color: #007bff; /* синий цвет заголовка */
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border-bottom: 1px solid #dee2e6;
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        form {
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Search Results</h1>
-<ul>
-    <!-- Вывод результатов поиска -->
-    <th:block th:each="locationDTO : ${searchResults}">
-        <li>
-            <p>City: <span th:text="${locationDTO.name}"></span></p>
-            <p>Latitude: <span th:text="${locationDTO.latitude}"></span></p>
-            <p>Longitude: <span th:text="${locationDTO.longitude}"></span></p>
-            <p>Country: <span th:text="${locationDTO.country}"></span></p>
-            <p>State: <span th:text="${locationDTO.state}"></span></p>
-            <!-- Кнопка "Сохранить" для сохранения местоположения -->
-            <form th:action="@{/location}" method="post">
-                <input type="hidden" name="name" th:value="${locationDTO.name}">
-                <input type="hidden" name="userId" th:value="${locationDTO.userId}">
-                <input type="hidden" name="latitude" th:value="${locationDTO.latitude}">
-                <input type="hidden" name="longitude" th:value="${locationDTO.longitude}">
-                <input type="hidden" name="country" th:value="${locationDTO.country}">
-                <input type="hidden" name="state" th:value="${locationDTO.state}">
-                <button type="submit">Save</button>
-            </form>
-        </li>
-    </th:block>
-</ul>
-<br><br>
-<a data-th-href="@{/search}">&larr; To the search page</a>
+<div class="container">
+    <h1>Search Results</h1>
+    <ul>
+        <!-- Вывод результатов поиска -->
+        <th:block th:each="locationDTO : ${searchResults}">
+            <li>
+                <p>City: <span th:text="${locationDTO.name}"></span></p>
+                <p>Latitude: <span th:text="${locationDTO.latitude}"></span></p>
+                <p>Longitude: <span th:text="${locationDTO.longitude}"></span></p>
+                <p>Country: <span th:text="${locationDTO.country}"></span></p>
+                <p>State: <span th:text="${locationDTO.state}"></span></p>
+                <!-- Кнопка "Сохранить" для сохранения местоположения -->
+                <form th:action="@{/location}" method="post">
+                    <input type="hidden" name="name" th:value="${locationDTO.name}">
+                    <input type="hidden" name="userId" th:value="${locationDTO.userId}">
+                    <input type="hidden" name="latitude" th:value="${locationDTO.latitude}">
+                    <input type="hidden" name="longitude" th:value="${locationDTO.longitude}">
+                    <input type="hidden" name="country" th:value="${locationDTO.country}">
+                    <input type="hidden" name="state" th:value="${locationDTO.state}">
+                    <button type="submit">Save</button>
+                </form>
+            </li>
+        </th:block>
+    </ul>
+    <br><br>
+    <a th:href="@{/search}">&larr; To the search page</a>
+</div>
 </body>
 </html>

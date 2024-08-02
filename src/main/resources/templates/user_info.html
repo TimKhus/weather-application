@@ -2,62 +2,140 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4; /* светло-серый фон */
+            color: #333; /* темно-серый текст */
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #ddd; /* светло-серые границы */
+            border-radius: 8px;
+            background-color: #fff; /* белый фон */
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* легкая тень */
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #007bff; /* синий цвет заголовка */
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            color: #333; /* темно-серый цвет заголовка */
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd; /* светло-серые границы */
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2; /* светло-серый фон для заголовков таблицы */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:nth-of-type(1) {
+            background-color: #dc3545; /* красный цвет для блокировки */
+        }
+        button:nth-of-type(2) {
+            background-color: #28a745; /* зеленый цвет для восстановления */
+        }
+        button:nth-of-type(3) {
+            background-color: #007bff; /* синий цвет для назначения админа */
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>User Information</h1>
+<div class="container">
+    <h1>User Information</h1>
 
-<!-- Display User Details -->
-<div>
-    <h2>User Details</h2>
-    <p><strong>ID:</strong> <span th:text="${user.id}">1</span></p>
-    <p><strong>Role:</strong> <span th:text="${user.role}">ROLE_USER</span></p>
-    <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
-</div>
+    <!-- Display User Details -->
+    <div>
+        <h2>User Details</h2>
+        <p><strong>ID:</strong> <span th:text="${user.id}">1</span></p>
+        <p><strong>Role:</strong> <span th:text="${user.role}">ROLE_USER</span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
+    </div>
 
-<!-- Display User Locations -->
-<div>
-    <h2>Locations</h2>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="location : ${user.locations}">
-            <td th:text="${location.id}">1</td>
-            <td th:text="${location.name}">Location Name</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <!-- Display User Locations -->
+    <div>
+        <h2>Locations</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="location : ${user.locations}">
+                <td th:text="${location.id}">1</td>
+                <td th:text="${location.name}">Location Name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-<br><br>
+    <div>
+        <!-- Block User Form -->
+        <form method="post" th:action="@{/admin/block/user/{userId}(userId=${user.id})}">
+            <button type="submit">Block user</button>
+        </form>
 
-<!-- Block User Form -->
-<form method="post" th:action="@{/admin/block/user/{userId}(userId=${user.id})}">
-    <button type="submit">Block user</button>
-</form>
-<br>
+        <!-- Restore User Role Form -->
+        <form method="post" th:action="@{/admin/unblock/user/{userId}(userId=${user.id})}">
+            <button type="submit">Restore user role</button>
+        </form>
 
-<!-- Restore User Role Form -->
-<form method="post" th:action="@{/admin/unblock/user/{userId}(userId=${user.id})}">
-    <button type="submit">Restore user role</button>
-</form>
+        <!-- Give Admin Role Form -->
+        <form method="post" th:action="@{/admin/admin/user/{userId}(userId=${user.id})}">
+            <button type="submit">Give admin role</button>
+        </form>
+    </div>
 
-<br>
-<!-- Give Admin Role Form -->
-<form method="post" th:action="@{/admin/admin/user/{userId}(userId=${user.id})}">
-    <button type="submit">Give admin role</button>
-</form>
-
-<br>
-
-<!-- Back to Users List -->
-<div>
-    <a href="/admin/users">Back to Users List</a>
+    <br>
+    <!-- Back to Users List -->
+    <div>
+        <a href="/admin/users">Back to Users List</a>
+    </div>
 </div>
 </body>
 </html>
