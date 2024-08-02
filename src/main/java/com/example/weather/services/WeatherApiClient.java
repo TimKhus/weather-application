@@ -41,7 +41,7 @@ public class WeatherApiClient {
     public ResponseEntity<List<SearchResult>> getLocationByName(String locationName) {
         String url = UriComponentsBuilder.fromHttpUrl(apiUrl + "geo/1.0/direct")
                 .queryParam("q", locationName)
-                .queryParam("limit", 5)
+                .queryParam("limit", 3)
                 .queryParam("appid", apiKey)
                 .toUriString();
 

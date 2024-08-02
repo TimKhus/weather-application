@@ -1,29 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .button.logout {
+            background-color: #dc3545; /* Red for logout */
+        }
+        .button.delete {
+            background-color: #dc3545; /* Red for delete */
+        }
+        .button.back {
+            background-color: #007bff; /* Blue for back */
+        }
+        .button:hover {
+            opacity: 0.8;
+        }
+        .error {
+            color: red;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<form method="get" data-th-action="@{/logout}">
-    <button type="submit">Log Out</button>
-</form>
-<br>
-<div th:if="${error}" style="color: red;">
-    <p th:text="${error}"></p>
+<div class="container">
+    <form method="get" data-th-action="@{/logout}">
+        <button type="submit" class="button logout">Log Out</button>
+    </form>
+    <div th:if="${error}" class="error">
+        <p th:text="${error}"></p>
+    </div>
+    <h1>Weather Data for <span th:text="${location.name}">Location Name</span></h1>
+    <p>Conditions: <span th:text="${weatherData.weather[0].main} + ': ' + ${weatherData.weather[0].description}">Conditions</span></p>
+    <p>Temperature: <span th:text="${#numbers.formatDecimal(weatherData.main.temp, 0, 0)} + '°C'">Temperature</span></p>
+    <p>Feels like: <span th:text="${#numbers.formatDecimal(weatherData.main.feels_like, 0, 0)} + '°C'">Feels like</span></p>
+    <p>Humidity: <span th:text="${weatherData.main.humidity} + '%'">Humidity</span></p>
+    <p>Visibility: <span th:text="${weatherData.visibility} + ' meters'">Visibility</span></p>
+    <p>Wind: <span th:text="${#numbers.formatDecimal(weatherData.wind.speed, 0, 0)} + ' meters/sec'">Wind</span></p>
+    <p>Wind direction: <span th:text="${weatherData.wind.deg} + ' deg'">Wind direction</span></p>
+    <br>
+    <a data-th-href="@{/weather/locations}" class="button back">&larr; To the locations list</a>
+    <br><br>
+    <form method="post" data-th-action="@{/location/delete/{locationId}(locationId=${locationId})}">
+        <button type="submit" class="button delete">Delete</button>
+    </form>
 </div>
-<h1>Weather Data for <span th:text="${location.name}">Location Name</span></h1>
-<p>Conditions: <span
-        th:text="${weatherData.weather[0].main} + ': ' + ${weatherData.weather[0].description}">Conditions</span></p>
-<p>Temperature: <span th:text="${#numbers.formatDecimal(weatherData.main.temp, 0, 0)} + '°C'">Temperature</span></p>
-<p>Feels like: <span th:text="${#numbers.formatDecimal(weatherData.main.feels_like, 0, 0)} + '°C'">Temperature</span>
-</p>
-<p>Humidity: <span th:text="${weatherData.main.humidity} + '%'">Humidity</span></p>
-<p>Visibility: <span th:text="${weatherData.visibility} + ' meters'">Visibility</span></p>
-<p>Wind: <span th:text="${#numbers.formatDecimal(weatherData.wind.speed, 0, 0)} + ' meters/sec'">Wind</span></p>
-<p>Wind direction: <span th:text="${weatherData.wind.deg} + ' deg'">Wind direction</span></p><br>
-<a data-th-href="@{/weather/locations}">&larr; To the locations list</a><br><br>
-<form method="post" data-th-action="@{/location/delete/{locationId}(locationId=${locationId})}">
-    <button type="submit">Delete</button>
-</form>
 </body>
 </html>
