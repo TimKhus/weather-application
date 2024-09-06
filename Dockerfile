@@ -19,9 +19,9 @@ COPY src /app/src
 # Сборка приложения
 RUN mvn package -DskipTests
 
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-cql7lijv2p9s739vbi90-a.oregon-postgres.render.com:5432/weather_app_363j
-ENV SPRING_DATASOURCE_USERNAME=weather_app_363j_user
-ENV SPRING_DATASOURCE_PASSWORD=k1Mk71DxqXHT1ZvXSsIvLjqWd0yFUiqv
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-crdha5o8fa8c738brvu0-a/weather_app_gem6
+ENV SPRING_DATASOURCE_USERNAME=weather_app_gem6_user
+ENV SPRING_DATASOURCE_PASSWORD=uzJ6Ge8MSJRsx6uENThPo7hUxXDe5VaR
 
 # Запуск приложения
 CMD ["java", "-jar", "target/weather-0.0.1-SNAPSHOT.war"]
